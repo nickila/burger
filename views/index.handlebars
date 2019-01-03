@@ -7,13 +7,13 @@
         <label for="ca">Burger Name:</label>
         <input type="text" id="ca" name="name">
     </div>
-    <ul>
-        {{#each burgers}}
-        <li>{{burger_name}}</li>
-        <li>{{devoured}}</li>
-        <hr>
-        {{/each}}
-    </ul>
+
     <button type="submit">Submit</button>
 </form>
 <h3>Enter a burger you want to eat. Click 'Submit' button.</h3>
+<ul>
+    {{#each burgers}}
+    <li>{{burger_name}}</li>
+    <li>{{devoured}}</li>
+    {{/each}}
+</ul>
