@@ -2,18 +2,51 @@
 
 <h1>EAT-DA-BURGER</h1>
 <br />
-<form class="burger-form">
-    <div class="form-group">
-        <label for="ca">Burger Name:</label>
-        <input type="text" id="ca" name="name">
-    </div>
 
-    <button type="submit">Submit</button>
-</form>
-<h3>Enter a burger you want to eat. Click 'Submit' button.</h3>
 <ul>
     {{#each burgers}}
-    <li>{{burger_name}}</li>
-    <li>{{devoured}}</li>
+    <li>{{burger_name}}
+        <form action="/delete?_method=DELETE" method="POST">
+        <input type="hidden" name="id" value="{{this.id}}">
+        <button type="submit">DEVOUR</button>
+        </form>
+
+    </li>
+    {{!-- <li>{{devoured}}</li> --}}
+
     {{/each}}
 </ul>
+<form method="POST" action="/create">
+<textarea type="text" name="burger"></textarea>
+<button type="submit">MAKE-DA-BURGER</button>
+</form>
+<h3>Enter a burger you want to eat. Click 'Submit' button.</h3>
+
+
+
+
+
+{{!-- <script>
+    $(function () {
+    $(".create-form").on("submit", function (event) {
+        event.preventDefault();
+
+        var newBurger = {
+            name: $("#ca").val().trim(),
+            devoured: $("[name=devoured]:checked").val().trim()
+        };
+
+        // Send the POST request.
+        $.ajax("/api/burgers", {
+            type: "POST",
+            data: newBurger
+        }).then(
+            function () {
+                console.log("created new burger");
+                // Reload the page to get the updated list
+                location.reload();
+            }
+        );
+    });
+});
+</script> --}}
