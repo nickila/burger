@@ -56,7 +56,10 @@ app.put("/update", function (req, res) {
     console.log('hello from server!');
     connection.query("UPDATE burgers SET devoured = (true) WHERE id = (?);", [req.body.id], function (err, result) {
         if (err) throw err;
-        
+        connection.query("SELECT * FROM burgers;", function (err, data) {
+            if (err) throw err;
+            res.render("index", { burgers: data })
+        })
         // res.render("index", { burgers: result })
     })
 });

@@ -4,21 +4,21 @@
 <br />
 
 {{!-- <ul>
-  {{#each cats}}
+    {{#each cats}}
     {{#unless sleepy}}
-      {{> cats/cat-block sleep=true}}
+    {{> cats/cat-block sleep=true}}
     {{/unless}}
-  {{/each}}
+    {{/each}}
 </ul>
 
 <h2>Cats that are sleepy!</h2>
 
 <ul>
-  {{#each cats}}
+    {{#each cats}}
     {{#if sleepy}}
-      {{> cats/cat-block sleep=false}}
+    {{> cats/cat-block sleep=false}}
     {{/if}}
-  {{/each}}
+    {{/each}}
 </ul> --}}
 
 
@@ -26,13 +26,13 @@
     {{#each burgers}}
     {{#unless devoured}}
     <li>{{burger_name}}
-      <form action="/update" method="PUT" id="update-form">
-        {{!-- <form action="/update?_method=UPDATE" method="POST"></form> --}}
-        <input type="hidden" name="id" value="{{this.id}}">
-        <button type="submit">DEVOUR</button>
-      </form>
+        <form action="/update" method="PUT" id="update-form">
+            {{!-- <form action="/update?_method=UPDATE" method="POST"></form> --}}
+            <input type="hidden" name="id" value="{{this.id}}">
+            <button type="submit">DEVOUR</button>
+        </form>
     </li>
-{{/unless}}
+    {{/unless}}
     {{/each}}
 </ul>
 
@@ -41,16 +41,16 @@
     {{#if devoured}}
     <li>{{burger_name}}
         {{!-- <form action="/update?_method=UPDATE" method="POST">
-        <input type="hidden" name="id" value="{{this.id}}">
-        <button type="submit">DEVOUR</button>
+            <input type="hidden" name="id" value="{{this.id}}">
+            <button type="submit">DEVOUR</button>
         </form> --}}
     </li>
-{{/if}}
+    {{/if}}
     {{/each}}
 </ul>
 <form method="POST" action="/create">
-<textarea type="text" name="burger"></textarea>
-<button type="submit">MAKE-DA-BURGER</button>
+    <textarea type="text" name="burger"></textarea>
+    <button type="submit">MAKE-DA-BURGER</button>
 </form>
 <h3>Enter a burger you want to eat. Click 'Submit' button.</h3>
 
@@ -60,24 +60,28 @@
 
 <script>
     $(function () {
-    $("#update-form").on("submit", function (event) {
-        event.preventDefault();
-    
-        var newBurger = {
-            id: parseInt(this.id.defaultValue)
-        };
+        $("#update-form").on("submit", function (event) {
+            event.preventDefault();
 
-        // Send the POST request.
-        $.ajax("/update", {
-            type: "PUT",
-            data: newBurger
-        }).then(
-            function () {
-                console.log("created new burger");
-                // Reload the page to get the updated list
-                location.reload(forceGet);
-            }
-        );
+            var newBurger = {
+                id: parseInt(this.id.defaultValue)
+            };
+            console.log("button pushed")
+            // Send the POST request.
+            $.ajax("/update", {
+                type: "PUT",
+                data: newBurger
+
+            }).then(
+                function () {
+                    $(document).ajaxStop(function () {
+                        window.location.reload();
+                    });
+                    console.log("created new burger");
+                    // Reload the page to get the updated list
+                    //location.reload(forceGet);
+                }
+            );
+        });
     });
-});
 </script>
