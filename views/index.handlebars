@@ -3,17 +3,49 @@
 <h1>EAT-DA-BURGER</h1>
 <br />
 
+{{!-- <ul>
+  {{#each cats}}
+    {{#unless sleepy}}
+      {{> cats/cat-block sleep=true}}
+    {{/unless}}
+  {{/each}}
+</ul>
+
+<h2>Cats that are sleepy!</h2>
+
+<ul>
+  {{#each cats}}
+    {{#if sleepy}}
+      {{> cats/cat-block sleep=false}}
+    {{/if}}
+  {{/each}}
+</ul> --}}
+
+
 <ul>
     {{#each burgers}}
+    {{#unless devoured}}
     <li>{{burger_name}}
-        <form action="/delete?_method=DELETE" method="POST">
+      <form action="/update" method="PUT" id="update-form">
+        {{!-- <form action="/update?_method=UPDATE" method="POST"></form> --}}
         <input type="hidden" name="id" value="{{this.id}}">
         <button type="submit">DEVOUR</button>
-        </form>
-
+      </form>
     </li>
-    {{!-- <li>{{devoured}}</li> --}}
+{{/unless}}
+    {{/each}}
+</ul>
 
+<ul>
+    {{#each burgers}}
+    {{#if devoured}}
+    <li>{{burger_name}}
+        {{!-- <form action="/update?_method=UPDATE" method="POST">
+        <input type="hidden" name="id" value="{{this.id}}">
+        <button type="submit">DEVOUR</button>
+        </form> --}}
+    </li>
+{{/if}}
     {{/each}}
 </ul>
 <form method="POST" action="/create">
@@ -26,27 +58,26 @@
 
 
 
-{{!-- <script>
+<script>
     $(function () {
-    $(".create-form").on("submit", function (event) {
+    $("#update-form").on("submit", function (event) {
         event.preventDefault();
-
+    
         var newBurger = {
-            name: $("#ca").val().trim(),
-            devoured: $("[name=devoured]:checked").val().trim()
+            id: parseInt(this.id.defaultValue)
         };
 
         // Send the POST request.
-        $.ajax("/api/burgers", {
-            type: "POST",
+        $.ajax("/update", {
+            type: "PUT",
             data: newBurger
         }).then(
             function () {
                 console.log("created new burger");
                 // Reload the page to get the updated list
-                location.reload();
+                location.reload(forceGet);
             }
         );
     });
 });
-</script> --}}
+</script>

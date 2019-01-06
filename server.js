@@ -24,9 +24,7 @@ var port = 3000;
 var routes = require("./controllers/burgers_controller.js");
 app.use(routes);
 
-app.listen(port, function () {
-    console.log("Server listening on: http://localhost:" + port);
-});
+
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -42,6 +40,7 @@ connection.connect(function (err) {
 
 app.get("/", function (req, res) {
     connection.query("SELECT * FROM burgers;", function (err, data) {
+        if (err) throw err;
         res.render("index", { burgers: data })
     })
 })
@@ -53,12 +52,17 @@ app.post('/create', function (req, res) {
     })
 });
 
-app.delete("/delete", function(req, res) {
-    connection.query("DELETE FROM burgers WHERE id = ?;", [req.body.id], function(err, results) {
+app.put("/update", function (req, res) {
+    console.log('hello from server!');
+    connection.query("UPDATE burgers SET devoured = (true) WHERE id = (?);", [req.body.id], function (err, result) {
         if (err) throw err;
-        res.redirect("/");
+        
+        // res.render("index", { burgers: result })
     })
 });
 // Require the following npm packages inside of the server.js file:
 
 // express
+app.listen(port, function () {
+    console.log("Server listening on: http://localhost:" + port);
+});
