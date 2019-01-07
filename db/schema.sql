@@ -10,7 +10,9 @@ id INTEGER AUTO_INCREMENT NOT NULL,
 burger_name VARCHAR(30) NOT NULL,
 devoured BOOLEAN DEFAULT 0,
 PRIMARY KEY (id)
-)
+);
+
+DELETE FROM burgers;
 -- id: an auto incrementing int that serves as the primary key.
 -- burger_name: a string.
 -- devoured: a boolean.

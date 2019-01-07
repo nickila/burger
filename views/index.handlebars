@@ -1,76 +1,74 @@
-<br />
-
-<h1>EAT-DA-BURGER</h1>
-<br />
-
-{{!-- <ul>
-    {{#each cats}}
-    {{#unless sleepy}}
-    {{> cats/cat-block sleep=true}}
-    {{/unless}}
-    {{/each}}
-</ul>
-
-<h2>Cats that are sleepy!</h2>
-
-<ul>
-    {{#each cats}}
-    {{#if sleepy}}
-    {{> cats/cat-block sleep=false}}
-    {{/if}}
-    {{/each}}
-</ul> --}}
-
-
-<ul>
-    {{#each burgers}}
-    {{#unless devoured}}
-    <li>{{burger_name}}
-        <form action="/update" method="PUT" id="update-form">
-            {{!-- <form action="/update?_method=UPDATE" method="POST"></form> --}}
-            <input type="hidden" name="id" value="{{this.id}}">
-            <button type="submit">DEVOUR</button>
-        </form>
-    </li>
-    {{/unless}}
-    {{/each}}
-</ul>
-
-<ul>
-    {{#each burgers}}
-    {{#if devoured}}
-    <li>{{burger_name}}
-        {{!-- <form action="/update?_method=UPDATE" method="POST">
-            <input type="hidden" name="id" value="{{this.id}}">
-            <button type="submit">DEVOUR</button>
-        </form> --}}
-    </li>
-    {{/if}}
-    {{/each}}
-</ul>
-<form method="POST" action="/create">
-    <textarea type="text" name="burger"></textarea>
-    <button type="submit">MAKE-DA-BURGER</button>
-</form>
-<h3>Enter a burger you want to eat. Click 'Submit' button.</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2" id="newBurger">
+            <h2>new burgers</h2>
+            <hr>
+            <ul>
+                {{#each burgers}}
+                {{#unless devoured}}
+                <li>{{id}} {{burger_name}}
+                    <form action="/update" method="PUT" id="update-form">
+                        {{!-- <form action="/update?_method=UPDATE" method="POST"></form> --}}
+                        <input type="hidden" name="id" value="{{this.id}}">
+                        <button type="submit">DEVOUR</button>
+                    </form>
+                </li>
+                {{/unless}}
+                {{/each}}
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <h1>Eat-Da-Burger</h1>
+            {{!--create a burger here--}}
+            <form method="POST" action="/create" id="create-form">
+                {{!-- <textarea type="text" name="burger"></textarea> --}}
+                <input type="text" name="burger" id="ca" class="form-control" placeholder="Enter a new burger">
+                <button class="btn btn-dark btn-lg" role="button" type="submit">MAKE-DA-BURGER</button>
+            </form>
 
 
+            <h3 class="message">Enter a new burger you'd like to eat...</h3>
+            <h3 class="message">AND DEVOUR IT!</h3>
+
+        </div>
 
 
+        <div class="col-md-2" id="eatenBurger">
+            <h2>eaten burgers</h2>
+            <hr>
+            <ul>
+
+                {{#each burgers}}
+                {{#if devoured}}
+                <li>{{id}} {{burger_name}}
+                </li>
+                {{/if}}
+                {{/each}}
+
+            </ul>
+        </div>
+    </div>
+
+    {{!-- <form method="DELETE" action="/delete">
+        <button type="submit">DELETE ALL BURGERS</button>
+    </form> --}}
+</div>
 
 <script>
     $(function () {
         $("#update-form").on("submit", function (event) {
             event.preventDefault();
+            //console.log(this);
+            var id = parseInt(this.id.defaultValue);
+            var newDevoured = true;
 
-            var newBurger = {
-                id: parseInt(this.id.defaultValue)
+            var newDevouredState = {
+                devoured: newDevoured
             };
-            console.log("button pushed")
-            // Send the POST request.
-            $.ajax("/update", {
+
+            $.ajax("/api/burgers/" + id, {
                 type: "PUT",
-                data: newBurger
+                data: newDevouredState
 
             }).then(
                 function () {
@@ -83,5 +81,43 @@
                 }
             );
         });
+
+
+        $("#create-form").on("submit", function (event) {
+            event.preventDefault();
+            
+            var newBurger = {
+                burger_name: $("#ca").val().trim()
+            };
+            console.log(newBurger.burger_name)
+            $.ajax("/api/burgers", {
+                type: "POST",
+                data: newBurger
+            }).then(
+                function () {
+                    location.reload();
+                }
+            );
+        });
     });
+
+
 </script>
+{{!-- $(function () {
+$("#delete-burgers").on("submit", function (event) {
+event.preventDefault();
+$.ajax("/delete", {
+type: "DELETE"
+
+}).then(
+function () {
+$(document).ajaxStop(function () {
+window.location.reload();
+});
+console.log("deleted all da burgers");
+// Reload the page to get the updated list
+//location.reload(forceGet);
+}
+);
+});
+}); --}}
