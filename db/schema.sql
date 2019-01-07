@@ -11,8 +11,10 @@ burger_name VARCHAR(30) NOT NULL,
 devoured BOOLEAN DEFAULT 0,
 PRIMARY KEY (id)
 );
-
+SET SQL_SAFE_UPDATES = 1;
 DELETE FROM burgers;
+
+SELECT * FROM burgers;
 -- id: an auto incrementing int that serves as the primary key.
 -- burger_name: a string.
 -- devoured: a boolean.
