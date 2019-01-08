@@ -5,15 +5,13 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-
 hr {
-    
-        display: block;
-        height: 1px;
-        border: 0;
-        border-top: 1px solid rgb(255, 62, 62);
-        margin: 1em 0;
-        padding: 0; 
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid rgb(255, 62, 62);
+    margin: 1em 0;
+    padding: 0; 
     
     
 }
@@ -21,7 +19,8 @@ button {
     margin-top: 10px;
 }
 h2 {
-    color: rgb(255, 62, 62)
+    color: rgb(255, 62, 62);
+    font-family: 'Pacifico', cursive;
 }
 
 h1 {
@@ -46,18 +45,17 @@ ul {
     padding: 0;
 }
 
-
 #eatenBurger {
+   
     margin-top: 50px;
-    background-color: white;
+    background-color: rgb(255, 242, 128);
     border-radius: 10px;
     
 }
 
 #newBurger {
-    margin-top: 50px;
-    background-color: white;
-    border-radius: 10px;
     
+    margin-top: 50px;
+    background-color: rgb(255, 242, 128);;
+    border-radius: 10px;  
 }
-
