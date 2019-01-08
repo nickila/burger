@@ -8,7 +8,6 @@
                 {{#unless devoured}}
                 <li>{{id}} {{burger_name}}
                     <form action="/update" method="PUT" id="update-form">
-                        {{!-- <form action="/update?_method=UPDATE" method="POST"></form> --}}
                         <input type="hidden" name="id" value="{{this.id}}">
                         <button type="submit">DEVOUR</button>
                     </form>
@@ -19,19 +18,13 @@
         </div>
         <div class="col-md-8 center">
             <h1>Eat-Da-Burger</h1>
-            {{!--create a burger here--}}
             <form method="POST" action="/create" id="create-form">
                 <input type="text" name="burger" id="ca" class="form-control" placeholder="Enter a new burger">
                 <button class="btn btn-dark btn-lg" role="button" type="submit">MAKE-DA-BURGER</button>
             </form>
-
-
             <h3 class="message">Enter a new burger you'd like to eat...</h3>
             <h3 class="message">AND DEVOUR IT!</h3>
-
         </div>
-
-
         <div class="col-md-2" id="eatenBurger">
             <h2>eaten burgers</h2>
             <hr>
@@ -47,17 +40,12 @@
             </ul>
         </div>
     </div>
-
-    {{!-- <form method="DELETE" action="/delete">
-        <button type="submit">DELETE ALL BURGERS</button>
-    </form> --}}
 </div>
 
 <script>
     $(function () {
         $("#update-form").on("submit", function (event) {
             event.preventDefault();
-            //console.log(this);
             var id = parseInt(this.id.defaultValue);
             var newDevoured = true;
 
@@ -74,21 +62,15 @@
                     $(document).ajaxStop(function () {
                         window.location.reload();
                     });
-                    console.log("created new burger");
-                    // Reload the page to get the updated list
-                    //location.reload(forceGet);
                 }
             );
         });
-
-
         $("#create-form").on("submit", function (event) {
-            event.preventDefault();
-            
+            event.preventDefault();  
             var newBurger = {
                 burger_name: $("#ca").val().trim()
             };
-            console.log(newBurger.burger_name)
+
             $.ajax("/api/burgers", {
                 type: "POST",
                 data: newBurger
@@ -100,23 +82,4 @@
         });
     });
 
-
 </script>
-{{!-- $(function () {
-$("#delete-burgers").on("submit", function (event) {
-event.preventDefault();
-$.ajax("/delete", {
-type: "DELETE"
-
-}).then(
-function () {
-$(document).ajaxStop(function () {
-window.location.reload();
-});
-console.log("deleted all da burgers");
-// Reload the page to get the updated list
-//location.reload(forceGet);
-}
-);
-});
-}); --}}
